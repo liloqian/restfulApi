@@ -1,0 +1,2 @@
+FLASK_APP=restfulApi
+FLASK_ENV=development
