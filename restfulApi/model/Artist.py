@@ -13,6 +13,6 @@ class Artist(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'birth': self.birth,
+            'birth': self.birth.__str__(),
             'city': self.city
         }

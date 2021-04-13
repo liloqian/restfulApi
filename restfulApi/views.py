@@ -1,11 +1,20 @@
 from restfulApi import app, db
 from restfulApi.model.Music import Music
 from restfulApi.model.Artist import Artist
-from flask import jsonify
+from flask import jsonify, request, make_response
+from datetime import datetime
 
 
-@app.route('/music')
+@app.route('/music', methods=['POST', 'GET'])
 def music():
+    if request.method == 'POST':
+        music = Music(
+            name=request.json.get('name'),
+            author=request.json.get('author'),
+            publish_time=datetime.now())
+        db.session.add(music)
+        db.session.commit()
+        return jsonify(status="200")
     musics = Music.query.order_by(Music.id.desc()).all()
     return jsonify(messages=[m.serialize() for m in musics])
 
@@ -19,8 +28,16 @@ def music_id(id):
         return jsonify(messages=music.serialize())
 
 
-@app.route('/artist')
+@app.route('/artist', methods=['POST', 'GET'])
 def artist():
+    if request.method == 'POST':
+        artist = Artist(
+            name=request.json.get('name'),
+            city=request.json.get('city'),
+            birth=request.json.get('birth'))
+        db.session.add(artist)
+        db.session.commit()
+        return jsonify(status="200")
     artists = Artist.query.order_by(Artist.id.desc()).all()
     return jsonify(artist=[m.serialize() for m in artists])
 

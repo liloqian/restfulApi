@@ -14,5 +14,5 @@ class Music(db.Model):
             'id': self.id,
             'name': self.name,
             'author': self.author,
-            'publish_time': self.publish_time
+            'publish_time': self.publish_time.__str__()
         }
