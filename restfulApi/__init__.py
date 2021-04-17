@@ -14,7 +14,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(app.root_path, 'da
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-from restfulApi import command, views
+from restfulApi.api import *
+from command.command import *
 
 if __name__ == '__main__':
     app.run()

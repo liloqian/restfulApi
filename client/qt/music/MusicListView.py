@@ -1,5 +1,9 @@
+import sys
+
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QListView, QMessageBox
 from PyQt5.QtCore import QStringListModel
+
+from client.qt.music.MusicDataManager import getMusicsName
 
 
 class MusicListView(QWidget):
@@ -25,3 +29,10 @@ class MusicListView(QWidget):
     def clickedList(self, qModelIndex):
         # QMessageBox.information(self, "QListView", "你选择了: " + self.qList[qModelIndex.row()])
         print("点击的是：" + str(qModelIndex.row()))
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    win = MusicListView()
+    win.showContent(getMusicsName())
+    sys.exit(app.exec_())
