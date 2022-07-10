@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 # config db
-app = Flask('restfulApi')
+app = Flask('restfulApi', static_folder="static")
 if sys.platform.startswith('win'):
     prefix = 'sqlite:///'
 else:

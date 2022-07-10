@@ -1,4 +1,4 @@
-import click
+import click, json
 from restfulApi import app, db
 from restfulApi.model.Music import Music
 from restfulApi.model.Artist import Artist
@@ -56,4 +56,5 @@ def query():
         'music': [m.serialize() for m in musics],
         'artist': [m.serialize() for m in artist]
     }
-    click.echo(ret)
+    # click.echo(ret)
+    click.echo(json.dumps(ret).encode('utf-8').decode("unicode_escape"))
