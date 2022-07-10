@@ -1,5 +1,4 @@
 import click
-
 from restfulApi import app, db
 from restfulApi.model.Music import Music
 from restfulApi.model.Artist import Artist
@@ -8,16 +7,16 @@ from restfulApi.model.Artist import Artist
 @app.cli.command()
 @click.option('-a', '--artist', default=False)
 @click.option('-m', '--music', default=False)
-@click.option('-all', default=True)
+@click.option('-both', default=True)
 @click.option('--count', default=20)
-def forge(count, artist, music, all):
+def forge(count, artist, music, both):
     from faker import Faker
     db.drop_all()
     db.create_all()
     fake = Faker(locale='zh_CN')
     click.echo("Now generating fake data...")
     for i in range(count):
-        if all:
+        if both:
             musicData = Music(
                 name=fake.sentence(),
                 author=fake.name(),
@@ -49,3 +48,12 @@ def forge(count, artist, music, all):
     click.echo('Generated %d fake music %s %s' % (count, artist, music))
 
 
+@app.cli.command()
+def query():
+    musics = Music.query.order_by(Music.publish_time.desc()).all()
+    artist = Artist.query.order_by(Artist.id.desc()).all()
+    ret = {
+        'music': [m.serialize() for m in musics],
+        'artist': [m.serialize() for m in artist]
+    }
+    click.echo(ret)

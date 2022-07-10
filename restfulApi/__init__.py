@@ -1,21 +1,8 @@
-import os
-import sys
+from restfulApi.app import app, db
+from restfulApi.api import musicView, helloView, artistView
+from flask import request
+from restfulApi.command.command import *
 
-from flask import Flask, request
-from flask_sqlalchemy import SQLAlchemy
-
-# config db
-app = Flask('restfulApi')
-if sys.platform.startswith('win'):
-    prefix = 'sqlite:///'
-else:
-    prefix = 'sqlite:////'
-app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(app.root_path, 'data.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
-from restfulApi.api import *
-from command.command import *
 
 if __name__ == '__main__':
     app.run()
@@ -24,5 +11,14 @@ if __name__ == '__main__':
 @app.before_request
 def before_request():
     # print("method: %s, header: %s" % (request.method, request.headers.environ))
-    print("method: %s, url: %s, cookie: %s, values: %s, data: %s" % (request.method, request.url,
-                                                                     request.cookies, request.values, request.data))
+    printRequest('before_request')
+
+
+@app.before_first_request
+def before_first_request():
+    printRequest('before_first_request')
+
+
+def printRequest(tag):
+    print("%s method: %s, url: %s, cookie: %s, values: %s, data: %s" % (tag, request.method, request.url,
+                                                                        request.cookies, request.values, request.data))

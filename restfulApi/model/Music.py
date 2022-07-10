@@ -1,6 +1,6 @@
 from datetime import datetime as dt
 
-from restfulApi import db
+from restfulApi.app import db
 
 
 class Music(db.Model):
