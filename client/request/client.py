@@ -50,18 +50,18 @@ def postArtist():
 
 
 def printResponse(response):
-    dict = {}
-    dict['url'] = response.request.url
-    dict['method'] = response.request.method
+    dictData = dict()
+    dictData['url'] = response.request.url
+    dictData['method'] = response.request.method
     if response.request.body is None:
-        dict['reqData'] = ""
+        dictData['reqData'] = ""
     else:
-        dict['reqData'] = response.request.body.encode('utf-8').decode("unicode_escape")
-    dict['code'] = response.status_code
-    dict['resText'] = response.content.decode("unicode_escape")
-    # dict['resJson'] = response.json
-    # dict['resHeader'] = response.headers
-    print(dict)
+        dictData['reqData'] = response.request.body.encode('utf-8').decode("unicode_escape")
+    dictData['code'] = response.status_code
+    dictData['resText'] = response.content.decode("unicode_escape")
+    dictData['resJson'] = response.json
+    dictData['resHeader'] = response.headers
+    print(dictData)
 
 
 if __name__ == '__main__':
